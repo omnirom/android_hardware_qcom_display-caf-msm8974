@@ -2172,4 +2172,3 @@ bool MDPCompSplit::draw(hwc_context_t *ctx, hwc_display_contents_1_t* list) {
     return true;
 }
 }; //namespace
-
