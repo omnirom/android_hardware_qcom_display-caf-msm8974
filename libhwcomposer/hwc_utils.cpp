@@ -408,7 +408,7 @@ uint32_t roundOff(uint32_t refreshRate) {
     int count =  (int) (sizeof(stdRefreshRates)/sizeof(stdRefreshRates[0]));
     uint32_t rate = refreshRate;
     for(int i=0; i< count; i++) {
-        if(abs(stdRefreshRates[i] - refreshRate) < 2) {
+        if((stdRefreshRates[i] - refreshRate) < 2) {
             // Most likely used for video, the fps can fluctuate
             // Ex: b/w 29 and 30 for 30 fps clip
             rate = stdRefreshRates[i];
@@ -1525,7 +1525,7 @@ int hwc_sync(hwc_context_t *ctx, hwc_display_contents_1_t* list, int dpy,
                     //For Blit, the app layers should be released when the Blit
                     //is complete. This fd was passed from copybit->draw
                     list->hwLayers[i].releaseFenceFd = dup(fd);
-                } else 
+                } else
 #endif
                 {
                     list->hwLayers[i].releaseFenceFd = dup(releaseFd);
@@ -2226,8 +2226,7 @@ void setGPUHint(hwc_context_t* ctx, hwc_display_contents_1_t* list) {
             EGLint attr_list[] = {EGL_GPU_HINT_1,
                                   EGL_GPU_LEVEL_3,
                                   EGL_NONE };
-            if((gpuHint->mCurrGPUPerfMode != EGL_GPU_LEVEL_3) &&
-                !((*(ctx->mpfn_eglGpuPerfHintQCOM))(gpuHint->mEGLDisplay,
+            if (!((*(ctx->mpfn_eglGpuPerfHintQCOM))(gpuHint->mEGLDisplay,
                                     gpuHint->mEGLContext, attr_list))) {
                 ALOGW("eglGpuPerfHintQCOM failed for Built in display");
             } else {
